@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIncomesTable extends Migration
+class AddUserIdFkToIncomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateIncomesTable extends Migration
      */
     public function up()
     {
-        Schema::create('incomes', function (Blueprint $table) {
-            $table->id('income_id');
-            $table->timestamps();
-            $table->string('title');
-            $table->double('amount');
-            $table->date('start_date');
-            $table->date('end_date');
+        Schema::table('incomes', function (Blueprint $table) {
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +26,8 @@ class CreateIncomesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incomes');
+        Schema::table('incomes', function (Blueprint $table) {
+            //
+        });
     }
 }

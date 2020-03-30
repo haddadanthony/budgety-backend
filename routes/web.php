@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Income;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/users', function() {
-    return 'Hello world';
+    $incomes = Income::all();
+    foreach($incomes as $income) {
+        echo $income->amount;
+    }
 });
