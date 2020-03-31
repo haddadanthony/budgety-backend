@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,15 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Saving;
 use App\Income;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users', function() {
-    $incomes = Income::all();
-    foreach($incomes as $income) {
-        echo $income->amount;
-    }
+Route::get('/incomes', 'IncomeController@index');
+Route::get('/incomes/{id}', 'IncomeController@show');
+
+Route::get('/savings', function() {
+    $savings = Saving::all();
+
+    print_r($savings);
 });

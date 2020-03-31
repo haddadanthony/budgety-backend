@@ -14,7 +14,7 @@ class CreateIncomesTable extends Migration
     public function up()
     {
         Schema::create('incomes', function (Blueprint $table) {
-            $table->id('income_id');
+            $table->id();
             $table->timestamps();
             $table->string('title');
             $table->double('amount');
