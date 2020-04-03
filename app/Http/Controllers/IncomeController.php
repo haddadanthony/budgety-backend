@@ -34,4 +34,10 @@ class IncomeController extends Controller
         $income->save();
     }
 
+    public function destroy($id)
+    {
+        $income = Income::findOrFail($id);
+        $income->delete();
+    }
+
 }

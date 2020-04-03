@@ -24,8 +24,5 @@ Route::get('/', function () {
 Route::get('/incomes', 'IncomeController@index');
 Route::get('/incomes/{id}', 'IncomeController@show');
 
-Route::get('/savings', function() {
-    $savings = Saving::all();
-
-    print_r($savings);
-});
+Route::get('/savings', "SavingController@index");
+Route::get('/savings/{id}', "SavingController@show")->middleware('cors');

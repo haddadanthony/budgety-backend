@@ -14,7 +14,7 @@ class CreateSavingsTable extends Migration
     public function up()
     {
         Schema::create('savings', function (Blueprint $table) {
-            $table->id('saving_id');
+            $table->id();
             $table->string('title');
             $table->double('amount', 10, 2);
             $table->date('due_date');
