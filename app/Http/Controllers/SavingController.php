@@ -20,4 +20,24 @@ class SavingController extends Controller
         return json_encode(["status" => "success", "persons" => $persons, "saving" => $saving]);
     }
 
+    public function store()
+    {
+        $saving = new Saving(request()->all());
+        $saving->save();
+    }
+
+    public function destroy($id)
+    {
+        $saving = Saving::findOrFail($id);
+        $saving->delete();
+    }
+
+    public function update(Request $request, $id)
+    {
+        $saving = Saving::findOrFail($id);
+        $inputs = $request->all();
+        $saving->fill($inputs);
+        $saving->update();
+    }
+
 }

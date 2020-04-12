@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Income;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\User;
 
 class IncomeController extends Controller
 {
     public function index()
     {
-        $incomes = Income::all();
+        $matches = ['user_id' => auth()->user()->id];
+        $incomes = Income::where($matches)->with('currency')->with('category')->get();
         return json_encode($incomes);
     }
 
@@ -22,22 +24,34 @@ class IncomeController extends Controller
 
     public function store(Request $request)
     {
-        $income = new Income();
-        $income->title = request('title');
-        $income->amount = request('amount');
-        $income->start_date = request('start_date');
-        $income->end_date = request('end_date');
-        $income->user_id = request('user_id');
-        $income->currency_id = request('currency_id');
-
-        error_log($request);
+        $income = new Income(request()->all());
         $income->save();
     }
 
     public function destroy($id)
     {
+        $matches = ['id' => $id, 'user_id' => auth()->user()->id];
+        $income = Income::where($matches)->delete();
+        if(!$income){
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'No income found'
+            ], 500);
+        }
+       else
+       {
+            return response()->json([
+                'status' => 'success',
+            ], 200);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
         $income = Income::findOrFail($id);
-        $income->delete();
+        $inputs = $request->all();
+        $income->fill($inputs);
+        $income->update();
     }
 
 }

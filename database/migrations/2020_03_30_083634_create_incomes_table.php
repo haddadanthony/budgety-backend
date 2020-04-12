@@ -17,9 +17,15 @@ class CreateIncomesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
+            $table->string('description');
             $table->double('amount');
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
+            $table->bigInteger('category_id')->unsigned();
+
+            $table->foreign('category_id')
+                  ->references('category_id')
+                  ->on('categories');
         });
     }
 

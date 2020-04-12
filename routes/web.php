@@ -21,8 +21,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/incomes', 'IncomeController@index');
-Route::get('/incomes/{id}', 'IncomeController@show');
-
-Route::get('/savings', "SavingController@index");
-Route::get('/savings/{id}', "SavingController@show")->middleware('cors');

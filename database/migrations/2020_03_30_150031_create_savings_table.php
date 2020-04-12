@@ -25,7 +25,7 @@ class CreateSavingsTable extends Migration
             $table->bigInteger('currency_id')->unsigned();
 
             $table->foreign('user_id')
-                  ->references('user_id')
+                  ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
             

@@ -14,8 +14,9 @@ class CreateExpensesTable extends Migration
     public function up()
     {
         Schema::create('expenses', function (Blueprint $table) {
-            $table->id('expense_id');
+            $table->id();
             $table->string('title');
+            $table->string('description');
             $table->double('amount');
             $table->date('start_date');
             $table->date('end_date');
@@ -23,9 +24,10 @@ class CreateExpensesTable extends Migration
 
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('currency_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
 
             $table->foreign('user_id')
-                  ->references('user_id')
+                  ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
 
@@ -33,6 +35,10 @@ class CreateExpensesTable extends Migration
                   ->references('currency_id')
                   ->on('currencies')
                   ->onDelete('cascade');
+
+            $table->foreign('category_id')
+                  ->references('category_id')
+                  ->on('categories');
         });
     }
 
